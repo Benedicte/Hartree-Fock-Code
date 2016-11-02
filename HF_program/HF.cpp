@@ -12,7 +12,8 @@ using namespace std;
  
 /**
     Function that returns the HF calcuation for a two electron 
-    diatomic.
+    diatomic. Calls all the subroutines needed to calculate the
+     Hartree Fock calculations
 
     @param 	bond_length the bond length og the diatomic.
 			zeta_atom_1 The slater orbital exponent for function 1.
@@ -22,15 +23,29 @@ using namespace std;
     @return A hartree fock matrix?
 */
 
-double hartree_fock_calculation(double bond_length, double zeta_atom_1,
+double hartree_fock_calculation(int STOn, double bond_length, double zeta_atom_1,
 		double zeta_atom_2, double atom_1_atomic_number, 
 		double atom_2_atomic_number)
 {
+	int not_sure_what_is_returned = one_and_two_integrals_calculation(STO_n, 
+		bond_length, zeta_atom_1, zeta_atom_2, atom_1_atomic_number, 
+		atom_2_atomic_number)
+		
+	int not_sure_what_is_returned = assemble_integrals(STO_n, 
+		bond_length, zeta_atom_1, zeta_atom_2, atom_1_atomic_number, 
+		atom_2_atomic_number)
+		
+	int not_sure_what_is_returned = SCF(STO_n, 
+		bond_length, zeta_atom_1, zeta_atom_2, atom_1_atomic_number, 
+		atom_2_atomic_number)
+		
 	double test_number = bond_length + zeta_atom_1;
 	return test_number;
 	
 }
 /**
+ 
+s
     @param 	bond_length the bond length og the diatomic.
 			zeta_atom_1 The slater orbital exponent for function 1.
 			zeta_atom_2 The slater orbital exponent for function 2.
@@ -39,7 +54,7 @@ double hartree_fock_calculation(double bond_length, double zeta_atom_1,
     @return The one and two electron integrals
 */     
 
-double one_and_two_integrals_calculation(double bond_length, double zeta_atom_1,
+double one_and_two_integrals_calculation(int STO_n, double bond_length, double zeta_atom_1,
 		double zeta_atom_2, double atom_1_atomic_number, 
 		double atom_2_atomic_number)
 {
@@ -51,7 +66,6 @@ double function_F0() //This calculates the Fock Matrix
 {
 	return 0;
 }
-
 
 double error_function() //calulcates the error function
 {
@@ -100,13 +114,14 @@ double diagonalize_F_matrix() //consider putting in another function
 
 int main()
 {
-	double bond_length = 2.2;
-	double zeta_atom_1 = 2;
-	double zeta_atom_2 = 2; 
-	double atom_1_atomic_number = 3; 
-	double atom_2_atomic_number = 3;
+	int STOn = 1;
+	double bond_length = 1.4632;
+	double zeta_atom_1 = 2.0925;
+	double zeta_atom_2 = 1.24; 
+	double atom_1_atomic_number = 2; 
+	double atom_2_atomic_number = 1;
 		
-	double x = hartree_fock_calculation(bond_length, zeta_atom_1,
+	double x = hartree_fock_calculation(STOn, bond_length, zeta_atom_1,
 				zeta_atom_2, atom_1_atomic_number, atom_2_atomic_number);
 	
 	cout << x << endl;
