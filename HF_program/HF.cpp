@@ -7,47 +7,14 @@
 */
 
 #include <iostream>
+#include <armadillo>
+
+using namespace arma;
 using namespace std;
  
- 
 /**
-    Function that returns the HF calcuation for a two electron 
-    diatomic. Calls all the subroutines needed to calculate the
-     Hartree Fock calculations
-
     @param 	bond_length the bond length og the diatomic.
-			zeta_atom_1 The slater orbital exponent for function 1.
-			zeta_atom_2 The slater orbital exponent for function 2.
-			atom_1_atomic_number The atomic number of atom 1
-			atom_2_atomic_number The atomic number of atom 2
-    @return A hartree fock matrix?
-*/
-
-double hartree_fock_calculation(int STOn, double bond_length, double zeta_atom_1,
-		double zeta_atom_2, double atom_1_atomic_number, 
-		double atom_2_atomic_number)
-{
-	int not_sure_what_is_returned = one_and_two_integrals_calculation(STO_n, 
-		bond_length, zeta_atom_1, zeta_atom_2, atom_1_atomic_number, 
-		atom_2_atomic_number)
-		
-	int not_sure_what_is_returned = assemble_integrals(STO_n, 
-		bond_length, zeta_atom_1, zeta_atom_2, atom_1_atomic_number, 
-		atom_2_atomic_number)
-		
-	int not_sure_what_is_returned = SCF(STO_n, 
-		bond_length, zeta_atom_1, zeta_atom_2, atom_1_atomic_number, 
-		atom_2_atomic_number)
-		
-	double test_number = bond_length + zeta_atom_1;
-	return test_number;
-	
-}
-/**
- 
-s
-    @param 	bond_length the bond length og the diatomic.
-			zeta_atom_1 The slater orbital exponent for function 1.
+			zeta_atom_1 The slater orbital exsponent for function 1.
 			zeta_atom_2 The slater orbital exponent for function 2.
 			atom_1_atomic_number The atomic number of atom 1
 			atom_2_atomic_number The atomic number of atom 2
@@ -62,7 +29,7 @@ double one_and_two_integrals_calculation(int STO_n, double bond_length, double z
 		return 0;
 }
 
-double function_F0() //This calculates the Fock Matrix
+double initial_fock_matrix() //This calculates the Fock Matrix
 {
 	return 0;
 }
@@ -107,9 +74,38 @@ double create_G_matrix() //creates the G matrix
 	return 0;
 }
 
-double diagonalize_F_matrix() //consider putting in another function
+/**
+    Function that returns the HF calcuation for a two electron 
+    diatomic. Calls all the subroutines needed to calculate the
+     Hartree Fock calculations
+
+    @param 	bond_length the bond length og the diatomic.
+			zeta_atom_1 The slater orbital exponent for function 1.
+			zeta_atom_2 The slater orbital exponent for function 2.
+			atom_1_atomic_number The atomic number of atom 1
+			atom_2_atomic_number The atomic number of atom 2
+    @return A hartree fock matrix?
+*/
+
+double hartree_fock_calculation(int STOn, double bond_length, double zeta_atom_1,
+		double zeta_atom_2, double atom_1_atomic_number, 
+		double atom_2_atomic_number)
 {
-	return 0;
+	int not_sure_what_is_returned = one_and_two_integrals_calculation(STOn,
+		bond_length, zeta_atom_1, zeta_atom_2, atom_1_atomic_number, 
+		atom_2_atomic_number);
+		
+	//int not_sure_what_is_returned1 = assemble_integrals( 
+	//	bond_length, zeta_atom_1, zeta_atom_2, atom_1_atomic_number, 
+	//	atom_2_atomic_number);
+		
+	//int not_sure_what_is_returned2 = SCF( 
+	//	bond_length, zeta_atom_1, zeta_atom_2, atom_1_atomic_number, 
+	//	atom_2_atomic_number);
+		
+	double test_number = bond_length + zeta_atom_1;
+	return test_number;
+	
 }
 
 int main()
@@ -120,6 +116,8 @@ int main()
 	double zeta_atom_2 = 1.24; 
 	double atom_1_atomic_number = 2; 
 	double atom_2_atomic_number = 1;
+	mat A = eye<mat>(5,5);
+	
 		
 	double x = hartree_fock_calculation(STOn, bond_length, zeta_atom_1,
 				zeta_atom_2, atom_1_atomic_number, atom_2_atomic_number);
