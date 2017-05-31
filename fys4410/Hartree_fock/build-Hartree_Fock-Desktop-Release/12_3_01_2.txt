@@ -1,0 +1,3 @@
+Number of particles: 12   Number of shells: 3
+Ground state energy: 42.47233734
+ 
